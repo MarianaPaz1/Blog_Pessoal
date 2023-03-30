@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,9 +27,10 @@ public class Usuario {
 
 	@NotNull(message = "O atributo Nome é Obrigatório!")
 	private String nome;
-
-	@NotNull(message = "O atributo Usuário é Obrigatório!")
-	@Email(message = "O atributo Usuário deve ser um email válido!")
+	
+	@Schema(example = "email@email.com.br")
+	@NotNull(message = "O atributo usuário é Obrigatório!")
+	@Email(message = "O atributo usuário deve ser um email válido!")
 	private String usuario;
 
 	@NotBlank(message = "O atributo Senha é Obrigatório!")
@@ -41,8 +43,22 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Postagem> postagem;
+	
+	
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+	
+	public Usuario() { }
+	
 
 	/* Insira os Getters and Setters */
+
+
 
 	public Long getId() {
 		return this.id;
